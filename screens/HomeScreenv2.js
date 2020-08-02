@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, FlatList, AsyncStorage, Image } from "react-native";
+import {
+	StyleSheet,
+	Text,
+	View,
+	FlatList,
+	AsyncStorage,
+	Image,
+} from "react-native";
 import CalendarStrip from "react-native-calendar-strip";
 import { Divider } from "react-native-paper";
 import Constants from "expo-constants";
@@ -142,7 +149,9 @@ class HomeScreen extends Component {
 	};
 
 	render() {
-		this.func();
+		setTimeout(() => {
+			this.func();
+		}, 2000);
 		this.lastUpdate();
 
 		return (
@@ -175,10 +184,10 @@ class HomeScreen extends Component {
 					/>
 					<Divider />
 				</View>
-				<View>
+				{/* <View>
 					<ErrorItem title="Chọn 1 ngày để xem lịch (Lỗi hiển thị)" />
 					<ErrorItem title="Vuốt xuống nếu không tải được lịch" />
-				</View>
+				</View> */}
 				<Divider />
 
 				{searchTrue != -1 ? (
@@ -194,8 +203,13 @@ class HomeScreen extends Component {
 					<View
 						style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
 					>
-						<Image style={{width: 120, height: 120}} source={require("../assets/calendar/calendar.png")} />
-						<Text style={{marginTop: 8}}>Không có lịch học</Text>
+						<Image
+							style={{ width: 120, height: 120 }}
+							source={require("../assets/calendar/calendar-1.png")}
+						/>
+						<Text style={{ marginTop: 8, fontWeight: "bold" }}>
+							OOPS...! Không có lịch
+						</Text>
 					</View>
 				)}
 
