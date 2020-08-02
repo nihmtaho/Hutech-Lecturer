@@ -127,6 +127,7 @@ function RootStackNavigator({ navigation }) {
 									AsyncStorage.setItem("userToken", usernameToken);
 									AsyncStorage.setItem("username", hasUsername);
 									AsyncStorage.setItem("fullName", fullName);
+									AsyncStorage.setItem("nextPage", "isTrue");
 								} catch (error) {}
 								dispatch({ type: "SIGN_IN", token: getToken() });
 							}
@@ -143,6 +144,8 @@ function RootStackNavigator({ navigation }) {
 					AsyncStorage.removeItem("userToken");
 					AsyncStorage.removeItem("username");
 					AsyncStorage.removeItem("fullName");
+					AsyncStorage.removeItem("stateCheckInStatus");
+					AsyncStorage.removeItem("nextPage");
 				} catch (error) {}
 				dispatch({ type: "SIGN_OUT" });
 			},

@@ -114,6 +114,9 @@ function Card(props) {
 					<Text style={styles.titleStyle}>
 						Địa điểm: {todaySubject.address}
 					</Text>
+					<Text style={styles.titleStyle}>
+						Lớp: {todaySubject.class}
+					</Text>
 				</View>
 			</View>
 			<View style={styles.mountContent}>

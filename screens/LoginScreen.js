@@ -48,7 +48,7 @@ function LoginScreen(props) {
 			<View style={styles.contentMidLayout}>
 				<TextInput
 					style={{ marginVertical: 5 }}
-					label="ID/MSSV"
+					label="Username"
 					color="#1E88E5"
 					// keyboardType="number-pad"
 					onFocus={() => setRequest(false)}

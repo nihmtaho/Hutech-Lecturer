@@ -33,12 +33,13 @@ const homeStack = ({ navigation, route }) => {
 				component={DetailScreen}
 				options={{
 					title: "Điểm danh",
+					headerShown: false,
 					headerStyle: {
-						backgroundColor: "#f4511e",
+						backgroundColor: "#f08a5d",
 					},
 					headerTintColor: "#fff",
 					headerTitleAlign: "center",
-					...TransitionPresets.SlideFromRightIOS,
+					...TransitionPresets.ModalPresentationIOS,
 				}}
 			/>
 		</HomeStack.Navigator>

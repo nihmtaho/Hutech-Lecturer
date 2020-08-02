@@ -6,9 +6,10 @@ import {
 	FlatList,
 	AsyncStorage,
 	Image,
+	Alert,
 } from "react-native";
 import CalendarStrip from "react-native-calendar-strip";
-import { Divider } from "react-native-paper";
+import { Divider, Caption } from "react-native-paper";
 import Constants from "expo-constants";
 import { StatusBar } from "expo-status-bar";
 
@@ -26,18 +27,21 @@ let get;
 let dateData = [];
 let temp;
 let searchTrue;
+// let isOpenUI;
 class HomeScreen extends Component {
 	async componentDidMount() {
 		let mssv = await AsyncStorage.getItem("username");
+		const isOpenUI = await AsyncStorage.getItem("stateCheckInStatus");
+		this.setState({isOpenUI: isOpenUI})
 		this.setState({ mssv: mssv });
 		setTimeout(() => {
 			this.fetch();
 		}, 2000);
+		this.fetch();
+		return;
 	}
 
-	componentDidUpdate() {}
-
-	fetch = () => {
+	fetch = async () => {
 		this.state.markedDates = [];
 		dateData = [];
 		this.setState({ isLoading: true });
@@ -77,6 +81,7 @@ class HomeScreen extends Component {
 			sbjList: [],
 			isLoading: false,
 			list: [],
+			isOpenUI: ""
 		};
 	}
 
@@ -139,19 +144,58 @@ class HomeScreen extends Component {
 		}
 	};
 
+	actionNavigate = async (item) => {
+		try {
+			const isOpen = await AsyncStorage.getItem("stateCheckInStatus");
+			let classIsOpen = await AsyncStorage.getItem("classLog");
+			let dateIsOpen = await AsyncStorage.getItem("dateLog");
+			let subjectIsOpen = await AsyncStorage.getItem("subjectLog");
+			let boo = await AsyncStorage.getItem("nextPage");
+			if (boo == "isTrue") {
+				if (isOpen == "isOpen") {
+					if (
+						classIsOpen == item.class &&
+						dateIsOpen == this.state.formattedDate &&
+						subjectIsOpen == item.subjectId
+					) {
+						this.props.navigation.navigate("Detail", {
+							subjectCode: item.subjectId,
+							dataMoment: this.state.formattedDate,
+							classCode: item.class,
+							nextPage: boo,
+						});
+					}
+					else {
+						Alert.alert(
+							"Thông báo",
+							"Bạn cần đống điểm danh trước khi mở 1 điểm danh khác",
+							[
+								{
+									text: "OK",
+									onPress: () => console.log("on pressed"),
+								},
+							]
+						);
+					}
+				} else {
+					this.props.navigation.navigate("Detail", {
+						subjectCode: item.subjectId,
+						dataMoment: this.state.formattedDate,
+						classCode: item.class,
+						nextPage: boo,
+					});
+				}
+			} else {
+			}
+		} catch (error) {}
+	};
+
 	renderRow = ({ item, index }) => {
-		return (
-			<Card
-				timeTable={item}
-				onPress={() => this.props.navigation.navigate("Detail")}
-			/>
-		);
+		return <Card timeTable={item} onPress={() => this.actionNavigate(item)} />;
 	};
 
 	render() {
-		setTimeout(() => {
-			this.func();
-		}, 2000);
+		this.func();
 		this.lastUpdate();
 
 		return (
@@ -164,17 +208,19 @@ class HomeScreen extends Component {
 						daySelectionAnimation={{
 							type: "background",
 							duration: 100,
-							highlightColor: "#f9d56e",
+							highlightColor: "#f6ab6c",
 						}}
 						style={{
 							height: 132,
 							paddingTop: Constants.statusBarHeight + 8,
 							paddingBottom: 8,
+							borderBottomEndRadius: 34,
+							borderBottomStartRadius: 34,
 						}}
-						calendarHeaderStyle={{ color: "black" }}
-						calendarColor={"#ffffff"}
-						dateNumberStyle={{ color: "black" }}
-						dateNameStyle={{ color: "black" }}
+						calendarHeaderStyle={{ color: "white" }}
+						calendarColor={"#f08a5d"}
+						dateNumberStyle={{ color: "white" }}
+						dateNameStyle={{ color: "white" }}
 						iconContainer={{ flex: 0.12 }}
 						customDatesStyles={this.state.customDatesStyles}
 						markedDates={this.state.markedDates}
@@ -182,13 +228,10 @@ class HomeScreen extends Component {
 						onDateSelected={this.onDateSelected}
 						useIsoWeekday={true}
 					/>
-					<Divider />
+					<Caption style={{ textAlign: "center", marginTop: 8 }}>
+						Ứng dụng dành cho giảng viên
+					</Caption>
 				</View>
-				{/* <View>
-					<ErrorItem title="Chọn 1 ngày để xem lịch (Lỗi hiển thị)" />
-					<ErrorItem title="Vuốt xuống nếu không tải được lịch" />
-				</View> */}
-				<Divider />
 
 				{searchTrue != -1 ? (
 					<FlatList
