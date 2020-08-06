@@ -7,13 +7,13 @@
       "android",
       "web"
     ],
-    "version": "1.0.2907",
+    "version": "1.2.0608",
     "orientation": "portrait",
-    "icon": "./assets/logo.png",
+    "icon": "./assets/logo-hutech-have-background.png",
     "splash": {
-      "image": "./assets/splash_bkg.png",
+      "image": "./assets/splash-face-recogination.png",
       "resizeMode": "contain",
-      "backgroundColor": "#000000"
+      "backgroundColor": "#ffffff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -23,11 +23,11 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.thaotruogg.hutechplus",
-      "buildNumber": "2.6.2007"
+      "bundleIdentifier": "com.thaotruogg.hutechlecturer",
+      "buildNumber": "1.2.0608"
     },
     "android": {
-      "package": "com.thaotruogg.hutechplus",
+      "package": "com.thaotruogg.hutechlecturer",
       "versionCode": 2
     }
   }
