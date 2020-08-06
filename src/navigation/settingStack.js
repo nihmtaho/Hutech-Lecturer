@@ -6,6 +6,7 @@ import {
 import SettingScreen from "../../screens/SettingScreen";
 import ProfileScreen from "../../screens/ProfileScreen";
 import SubjectsListScreen from "../../screens/history-screens/SubjectsListScreen";
+import BugScreen from "../../screens/bug-a-help-screens/BugScreen";
 
 const SettingStack = createStackNavigator();
 
@@ -31,14 +32,27 @@ const settingStack = ({ route, navigation }) => {
 			<SettingStack.Screen
 				name="Profile"
 				component={ProfileScreen}
-				options={{ title: "Tài khoản", headerShown: false, ...TransitionPresets.FadeFromBottomAndroid, }}
+				options={{
+					title: "Tài khoản",
+					headerShown: false,
+					...TransitionPresets.FadeFromBottomAndroid,
+				}}
 			/>
 			<SettingStack.Screen
 				name="SubjectList"
 				component={SubjectsListScreen}
 				options={{
 					title: "Môn học",
-					headerShown: true,
+					headerShown: false,
+					headerTitleAlign: "center",
+				}}
+			/>
+			<SettingStack.Screen
+				name="BugScreen"
+				component={BugScreen}
+				options={{
+					title: "Báo lỗi",
+					headerShown: false,
 					headerTitleAlign: "center",
 				}}
 			/>

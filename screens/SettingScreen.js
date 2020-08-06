@@ -91,12 +91,12 @@ const SettingScreen = ({ navigation }) => {
 			</View>
 			{/* <LearnView title="8" /> */}
 			{/* <Divider /> */}
-			<Subheading style={{ paddingLeft: 12, fontWeight: "bold" }}>
-				Lựa chọn
-			</Subheading>
 			<ScrollView>
+				<Subheading style={{ paddingLeft: 12, fontWeight: "bold" }}>
+					Lựa chọn
+				</Subheading>
 				<MenuView
-					title="Lịch sử điểm danh"
+					title="Xem điểm danh của sinh viên"
 					iconLeft="calendar"
 					iconRight="arrow-right"
 					color="#0063cd"
@@ -114,6 +114,9 @@ const SettingScreen = ({ navigation }) => {
 					iconRight="arrow-right"
 					color="green"
 				/>
+				<Subheading style={{ marginTop: 8, paddingLeft: 12, fontWeight: "bold" }}>
+					Ứng dụng
+				</Subheading>
 				<MenuView
 					title="Trợ giúp"
 					iconLeft="questioncircle"
@@ -125,6 +128,7 @@ const SettingScreen = ({ navigation }) => {
 					iconLeft="exclamationcircle"
 					iconRight="arrow-right"
 					color="red"
+					onPress={() => navigation.navigate("BugScreen")}
 				/>
 			</ScrollView>
 			<StatusBar style="auto" />

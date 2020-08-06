@@ -12,6 +12,7 @@ import CalendarStrip from "react-native-calendar-strip";
 import { Divider, Caption } from "react-native-paper";
 import Constants from "expo-constants";
 import { StatusBar } from "expo-status-bar";
+import TodayInfo from "../components/todayInfo";
 
 import { db } from "../src/config/db";
 import moment from "moment";
@@ -32,7 +33,7 @@ class HomeScreen extends Component {
 	async componentDidMount() {
 		let mssv = await AsyncStorage.getItem("username");
 		const isOpenUI = await AsyncStorage.getItem("stateCheckInStatus");
-		this.setState({isOpenUI: isOpenUI})
+		this.setState({ isOpenUI: isOpenUI });
 		this.setState({ mssv: mssv });
 		setTimeout(() => {
 			this.fetch();
@@ -81,7 +82,7 @@ class HomeScreen extends Component {
 			sbjList: [],
 			isLoading: false,
 			list: [],
-			isOpenUI: ""
+			isOpenUI: "",
 		};
 	}
 
@@ -164,8 +165,7 @@ class HomeScreen extends Component {
 							classCode: item.class,
 							nextPage: boo,
 						});
-					}
-					else {
+					} else {
 						Alert.alert(
 							"Thông báo",
 							"Bạn cần đống điểm danh trước khi mở 1 điểm danh khác",
@@ -255,7 +255,13 @@ class HomeScreen extends Component {
 						</Text>
 					</View>
 				)}
-
+				<View>
+					<TodayInfo
+						day={moment().format("DD")}
+						month={moment().format("MM")}
+						weekDay={moment().format('dddd')}
+					/>
+				</View>
 				<StatusBar style="auto" />
 			</View>
 		);

@@ -18,7 +18,7 @@ const menuView = (props) => {
                     <SimpleLineIcons name={props.iconRight} size={12} color="black" />
                 </View>
             </View>
-            <Divider />
+            <Divider style={{marginLeft: 60}} />
         </TouchableOpacity>
     )
 }

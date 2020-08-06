@@ -216,7 +216,7 @@ const DetailScreen = ({ navigation, route }) => {
 						justifyContent: "flex-end",
 					}}
 				>
-					<Caption style={{ marginRight: 4 }}>Pull down here to close</Caption>
+					<Caption style={{ marginRight: 4 }}>Pull down to close</Caption>
 					<AntDesign name="arrowdown" size={24} color="#fff" />
 				</TouchableOpacity>
 				<Title
@@ -283,7 +283,7 @@ const DetailScreen = ({ navigation, route }) => {
 					<Button
 						contentStyle={{ height: 54 }}
 						mode="contained"
-						color="#1E88E5"
+						color="#f08a5d"
 						onPress={() => _closeAttendance()}
 					>
 						Đóng điểm danh
@@ -292,7 +292,7 @@ const DetailScreen = ({ navigation, route }) => {
 					<Button
 						contentStyle={{ height: 54 }}
 						mode="contained"
-						color="#1E88E5"
+						color="#f08a5d"
 						onPress={() => _openAttendance()}
 					>
 						Mở điểm danh
@@ -305,7 +305,7 @@ const DetailScreen = ({ navigation, route }) => {
 				color="#dd2c00"
 				onPress={() => navigation.goBack()}
 			>
-				Close
+				Trở về
 			</Button>
 			<StatusBar style="dark" />
 		</View>

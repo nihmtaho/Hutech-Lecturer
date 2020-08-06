@@ -117,6 +117,7 @@ const ProfileScreen = ({ navigation }, props) => {
 					paddingTop: Constants.statusBarHeight,
 					borderBottomEndRadius: 34,
 					borderBottomStartRadius: 34,
+					elevation: 4
 				}}
 			>
 				<TouchableOpacity
@@ -227,6 +228,7 @@ const styles = StyleSheet.create({
 		display: "flex",
 		justifyContent: "center",
 		alignItems: "center",
+		zIndex: 999
 	},
 	iconLogOut: {
 		position: "absolute",
@@ -235,14 +237,15 @@ const styles = StyleSheet.create({
 		display: "flex",
 		justifyContent: "center",
 		alignItems: "center",
+		zIndex: 998
 	},
 	custom: {
-		backgroundColor: "#c4fb6d",
-		width: 100,
+		backgroundColor: "#fff",
 		textAlign: "center",
 		color: "#000",
 		borderRadius: 5,
 		paddingVertical: 2,
+		paddingHorizontal: 8
 	},
 });
 
