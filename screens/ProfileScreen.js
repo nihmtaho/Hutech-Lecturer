@@ -53,43 +53,48 @@ const ProfileScreen = ({ navigation }, props) => {
 		let username = await AsyncStorage.getItem("username");
 		// fetch data
 		db.ref("Teachers/" + username).once("value", (Snapshot) => {
-			let departmentCode_log = Snapshot.child("departmentCode").val();
-			let majorCode_log = Snapshot.child("majorCode").val();
+			if (Snapshot.exists()) {
+				let departmentCode_log = Snapshot.child("departmentCode").val();
+				let majorCode_log = Snapshot.child("majorCode").val();
 
-			let yearInOut_log = Snapshot.child("yearInOut").val();
-			let fullName_log = Snapshot.child("fullname").val();
-			let email_log = Snapshot.child("email").val();
-			let address_log = Snapshot.child("addressUser").val();
-			let numberPhone_log = Snapshot.child("phoneNumber").val();
-			let classUser_log = Snapshot.child("classCode").val();
-			let trainingSystem_log = Snapshot.child("trainingSystem").val();
+				let yearInOut_log = Snapshot.child("yearInOut").val();
+				let fullName_log = Snapshot.child("fullname").val();
+				let email_log = Snapshot.child("email").val();
+				let address_log = Snapshot.child("addressUser").val();
+				let numberPhone_log = Snapshot.child("phoneNumber").val();
+				let classUser_log = Snapshot.child("classCode").val();
+				let trainingSystem_log = Snapshot.child("trainingSystem").val();
 
-			const data_log = [];
-			data_log.push(
-				fullName_log,
-				username,
-				email_log,
-				address_log,
-				numberPhone_log,
-				classUser_log,
-				yearInOut_log,
-				trainingSystem_log
-			);
+				const data_log = [];
+				data_log.push(
+					fullName_log,
+					username,
+					email_log,
+					address_log,
+					numberPhone_log,
+					classUser_log,
+					yearInOut_log,
+					trainingSystem_log
+				);
 
-			db.ref("Departments/" + departmentCode_log).once("value", (Snapshot) => {
-				let departmentName_log = Snapshot.child("departmentName").val();
+				db.ref("Departments/" + departmentCode_log).once(
+					"value",
+					(Snapshot) => {
+						let departmentName_log = Snapshot.child("departmentName").val();
 
-				db.ref("Majors/" + majorCode_log).once("value", (Snapshot) => {
-					let majorName_log = Snapshot.child("majorName").val();
+						db.ref("Majors/" + majorCode_log).once("value", (Snapshot) => {
+							let majorName_log = Snapshot.child("majorName").val();
 
-					setState({
-						departmentName: departmentName_log,
-						majorName: majorName_log,
-						data: data_log,
-					});
-					setIsLoading(false);
-				});
-			});
+							setState({
+								departmentName: departmentName_log,
+								majorName: majorName_log,
+								data: data_log,
+							});
+							setIsLoading(false);
+						});
+					}
+				);
+			}
 		});
 	};
 
@@ -117,7 +122,7 @@ const ProfileScreen = ({ navigation }, props) => {
 					paddingTop: Constants.statusBarHeight,
 					borderBottomEndRadius: 34,
 					borderBottomStartRadius: 34,
-					elevation: 4
+					elevation: 4,
 				}}
 			>
 				<TouchableOpacity
@@ -228,7 +233,7 @@ const styles = StyleSheet.create({
 		display: "flex",
 		justifyContent: "center",
 		alignItems: "center",
-		zIndex: 999
+		zIndex: 999,
 	},
 	iconLogOut: {
 		position: "absolute",
@@ -237,7 +242,7 @@ const styles = StyleSheet.create({
 		display: "flex",
 		justifyContent: "center",
 		alignItems: "center",
-		zIndex: 998
+		zIndex: 998,
 	},
 	custom: {
 		backgroundColor: "#fff",
@@ -245,7 +250,7 @@ const styles = StyleSheet.create({
 		color: "#000",
 		borderRadius: 5,
 		paddingVertical: 2,
-		paddingHorizontal: 8
+		paddingHorizontal: 8,
 	},
 });
 

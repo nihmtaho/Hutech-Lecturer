@@ -17,7 +17,7 @@ const BugScreen = ({ navigation, route }) => {
 					style={styles.image}
 					source={require("../../assets/011-sandclock.png")}
 				/>
-				<Title>Coming-Soon</Title>
+				<Title style={{color: "#222831"}}>Coming-Soon</Title>
 			</View>
 			<StatusBar style="auto" />
 		</View>
