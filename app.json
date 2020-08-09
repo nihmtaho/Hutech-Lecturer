@@ -1,12 +1,17 @@
 {
   "expo": {
-    "name": "HutechLecturer",
+    "name": "Hutech Lecturer",
     "slug": "HutechLecturer",
-    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "version": "1.2.0608",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/logo-hutech-have-background.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/splash-face-recogination.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -17,10 +22,13 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.thaotruogg.hutechlecturer",
+      "buildNumber": "1.2.0608"
     },
-    "web": {
-      "favicon": "./assets/favicon.png"
+    "android": {
+      "package": "com.thaotruogg.hutechlecturer",
+      "versionCode": 2
     }
   }
 }
