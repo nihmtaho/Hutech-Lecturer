@@ -183,16 +183,12 @@ const DetailScreen = ({ navigation, route }) => {
 	};
 
 	const _comingSoon = () => {
-		Alert.alert(
-			"Thông báo",
-			"Tính năng sẽ sớm được nâng cấp",
-			[
-				{
-					text: "OK",
-					onPress: () => console.log("on pressed"),
-				},
-			]
-		);
+		Alert.alert("Thông báo", "Tính năng sẽ sớm được nâng cấp", [
+			{
+				text: "OK",
+				onPress: () => console.log("on pressed"),
+			},
+		]);
 	};
 
 	// UiScreen
@@ -228,7 +224,7 @@ const DetailScreen = ({ navigation, route }) => {
 			{/* Top Screen */}
 			<View style={styles.topScreen}>
 				<Title>Chi tiết môn học đang giảng dạy</Title>
-				<Divider style={{marginHorizontal: 24, marginTop: 6}} />
+				<Divider style={{ marginHorizontal: 24, marginTop: 6 }} />
 				<View style={styles.detailBlock}>
 					<Caption>Mã môn</Caption>
 					<Text>{subjectCode}</Text>
@@ -269,7 +265,7 @@ const DetailScreen = ({ navigation, route }) => {
 					)}
 				</View>
 				<Button
-					style={{marginTop: 24}}
+					style={{ marginTop: 24 }}
 					mode="text"
 					color="#1E88E5"
 					onPress={() => _comingSoon()}
@@ -279,24 +275,28 @@ const DetailScreen = ({ navigation, route }) => {
 			</View>
 			{/* Bottom Screen */}
 			<View style={styles.bottomScreen}>
-				{isOpen === true ? (
-					<Button
-						contentStyle={{ height: 54 }}
-						mode="contained"
-						color="#f08a5d"
-						onPress={() => _closeAttendance()}
-					>
-						Đóng điểm danh
-					</Button>
+				{dataMoment == moment().format("YYYY-MM-DD") ? (
+					isOpen === true ? (
+						<Button
+							contentStyle={{ height: 54 }}
+							mode="contained"
+							color="#f08a5d"
+							onPress={() => _closeAttendance()}
+						>
+							Đóng điểm danh
+						</Button>
+					) : (
+						<Button
+							contentStyle={{ height: 54 }}
+							mode="contained"
+							color="#f08a5d"
+							onPress={() => _openAttendance()}
+						>
+							Mở điểm danh
+						</Button>
+					)
 				) : (
-					<Button
-						contentStyle={{ height: 54 }}
-						mode="contained"
-						color="#f08a5d"
-						onPress={() => _openAttendance()}
-					>
-						Mở điểm danh
-					</Button>
+					<Caption style={{textAlign: "center"}}>Ngày điểm danh không phải hôm nay :)</Caption>
 				)}
 			</View>
 			<Button

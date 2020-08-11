@@ -2,8 +2,7 @@ import React from "react";
 import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
 
 function listSubject(props) {
-	const todaySubject = props.timeTable;
-	const tietHoc = todaySubject.time;
+	const data = props.dataProps;
 
 	return (
 		<TouchableOpacity
@@ -12,11 +11,11 @@ function listSubject(props) {
 			style={styles.container}
 		>
 			<View style={styles.divContent}>
-				<Text style={(styles.titleStyle, styles.fontSize)}>{subjectName}</Text>
+				<Text style={(styles.titleStyle, styles.fontSize)}>{data.subjectName}</Text>
 			</View>
 			<View style={styles.mountContent}>
 				<View style={styles.mountLeft}>
-					<Text style={styles.titleStyle}>Mã môn: {subjectID} </Text>
+					<Text style={styles.titleStyle}>Mã môn: {data.subjectCode} </Text>
 				</View>
 			</View>
 		</TouchableOpacity>
@@ -25,11 +24,12 @@ function listSubject(props) {
 
 const styles = StyleSheet.create({
 	container: {
-		backgroundColor: "#5D6D7E",
+		backgroundColor: "#f08a5d",
 		padding: 12,
-		marginVertical: 4,
+		marginVertical: 6,
 		marginHorizontal: 10,
-		borderRadius: 6,
+		borderRadius: 14,
+		elevation: 2
 	},
 	divContent: {
 		display: "flex",

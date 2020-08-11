@@ -7,9 +7,9 @@ import {
 	AsyncStorage,
 	Image,
 	Alert,
+	SafeAreaView,
 } from "react-native";
 import CalendarStrip from "react-native-calendar-strip";
-import { Divider, Caption } from "react-native-paper";
 import Constants from "expo-constants";
 import { StatusBar } from "expo-status-bar";
 import TodayInfo from "../components/todayInfo";
@@ -18,7 +18,6 @@ import { db } from "../src/config/db";
 import moment from "moment";
 
 import Card from "../components/Card";
-import ErrorItem from "../components/ErrorItem";
 
 let date = "";
 let customDatesStyles = [];
@@ -199,7 +198,7 @@ class HomeScreen extends Component {
 		this.lastUpdate();
 
 		return (
-			<View style={styles.container}>
+			<SafeAreaView style={styles.container}>
 				<View>
 					<CalendarStrip
 						scrollable
@@ -228,9 +227,6 @@ class HomeScreen extends Component {
 						onDateSelected={this.onDateSelected}
 						useIsoWeekday={true}
 					/>
-					<Caption style={{ textAlign: "center", marginTop: 8 }}>
-						Ứng dụng dành cho giảng viên
-					</Caption>
 				</View>
 
 				{searchTrue != -1 ? (
@@ -259,11 +255,11 @@ class HomeScreen extends Component {
 					<TodayInfo
 						day={moment().format("DD")}
 						month={moment().format("MM")}
-						weekDay={moment().format('dddd')}
+						weekDay={moment().format("dddd")}
 					/>
 				</View>
 				<StatusBar style="auto" />
-			</View>
+			</SafeAreaView>
 		);
 	}
 }
