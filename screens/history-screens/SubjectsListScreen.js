@@ -1,37 +1,128 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
 	View,
 	StyleSheet,
 	ScrollView,
 	FlatList,
 	AsyncStorage,
+	ActivityIndicator,
+	SafeAreaView,
+	RefreshControl,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import ListSubject from "../../components/listSubject";
 import HeaderComponent from "../../components/Header";
 
-const renderRow = ({ item, index }) => {
-	return <ListSubject />;
-};
+import { db } from "../../src/config/db";
 
 const SubjectsListScreen = ({ navigation }) => {
-	//    const
+	const [valueData, setValueData] = useState([]);
+	const [isLoad, setIsLoad] = useState(false);
+	const [refreshing, setRefreshing] = useState(false);
+
+	useEffect(() => {
+		_fetchSubjectCode();
+	}, []);
+
+	const _fetchSubjectCode = async () => {
+		try {
+			setIsLoad(true);
+			let username = await AsyncStorage.getItem("username");
+			db.ref("Teachers/" + username + "/schedule/").on("value", (Snapshot) => {
+				if (Snapshot.exists()) {
+					let unique_array = [];
+					let value_snapshot = Snapshot.val();
+					for (let index = 0; index < value_snapshot.length; index++) {
+						let element_first = Object.values(value_snapshot[index])[1];
+						for (let y = 0; y < element_first.length; y++) {
+							let element_second = Object.values(element_first[y])[2];
+							unique_array.push(element_second);
+						}
+					}
+					unique_array = [...new Set(unique_array)];
+					let arrayInfoSubject = [];
+
+					for (let i = 0; i < unique_array.length; i++) {
+						let value_of_array = unique_array[i];
+						db.ref("Subject/" + value_of_array + "/").on(
+							"value",
+							(Snapshot) => {
+								if (Snapshot.exists()) {
+									let value_subjectCode = Object.values(Snapshot.val())[2];
+									let value_subjectName = Object.values(Snapshot.val())[3];
+									arrayInfoSubject.push({
+										subjectCode: value_subjectCode,
+										subjectName: value_subjectName,
+									});
+								}
+							}
+						);
+					}
+					setValueData(arrayInfoSubject);
+					setIsLoad(false);
+					setRefreshing(false);
+				}
+			});
+		} catch (error) {}
+	};
+
+	const wait = (timeout) => {
+		return new Promise((resolve) => {
+			setTimeout(resolve, timeout);
+		});
+	};
+
+	const _onRefresh = React.useCallback(() => {
+		setRefreshing(true);
+		wait(2000).then(() => _fetchSubjectCode());
+	}, []);
+
+	const _renderRow = ({ item }) => {
+		return (
+			<ListSubject
+				dataProps={item}
+				onPress={() =>
+					navigation.navigate("HistoryScreen", {
+						subjectCode: item.subjectCode,
+					})
+				}
+			/>
+		);
+	};
 
 	return (
-		<View>
+		<SafeAreaView style={styles.container}>
 			<HeaderComponent
 				title="CHỌN MÔN HỌC"
 				subTitle="Chọn một môn học để xem nhật kí điểm danh"
 				onPress={() => navigation.goBack()}
 			/>
+			<View style={styles.content}>
+				{isLoad ? (
+					<ActivityIndicator />
+				) : (
+					<FlatList
+						data={valueData}
+						renderItem={_renderRow}
+						keyExtractor={(i, k) => k.toString()}
+						refreshControl={
+							<RefreshControl refreshing={refreshing} onRefresh={_onRefresh} />
+						}
+					/>
+				)}
+			</View>
 			<StatusBar style="auto" />
-		</View>
+		</SafeAreaView>
 	);
 };
 
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
+	},
+	content: {
+		flex: 1,
+		padding: 4,
 	},
 });
 
