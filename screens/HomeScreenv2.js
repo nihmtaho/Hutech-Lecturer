@@ -10,6 +10,7 @@ import {
 	SafeAreaView,
 } from "react-native";
 import CalendarStrip from "react-native-calendar-strip";
+import { Caption } from "react-native-paper";
 import Constants from "expo-constants";
 import { StatusBar } from "expo-status-bar";
 import TodayInfo from "../components/todayInfo";
@@ -177,7 +178,7 @@ class HomeScreen extends Component {
 						);
 					}
 				} else {
-					this.props.navigation.navigate("Detail", {
+					this.props.navigation.push("Detail", {
 						subjectCode: item.subjectId,
 						dataMoment: this.state.formattedDate,
 						classCode: item.class,
@@ -229,33 +230,42 @@ class HomeScreen extends Component {
 					/>
 				</View>
 
-				{searchTrue != -1 ? (
-					<FlatList
-						style={{ marginVertical: 6 }}
-						data={this.state.list}
-						renderItem={this.renderRow}
-						keyExtractor={(i, k) => k.toString()}
-						refreshing={this.state.isLoading}
-						onRefresh={this.fetch}
-					/>
-				) : (
-					<View
-						style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
-					>
-						<Image
-							style={{ width: 120, height: 120 }}
-							source={require("../assets/calendar/calendar-1.png")}
+				<View style={styles.content}>
+					{searchTrue != -1 ? (
+						<FlatList
+							style={{ marginVertical: 6 }}
+							data={this.state.list}
+							renderItem={this.renderRow}
+							keyExtractor={(i, k) => k.toString()}
+							refreshing={this.state.isLoading}
+							onRefresh={this.fetch}
 						/>
-						<Text style={{ marginTop: 8, fontWeight: "bold" }}>
-							OOPS...! Không có lịch
-						</Text>
-					</View>
-				)}
+					) : (
+						<View
+							style={{
+								flex: 1,
+								alignItems: "center",
+								justifyContent: "center",
+							}}
+						>
+							<Caption>Chọn vào lịch nếu bạn không thấy lịch biểu</Caption>
+							<Image
+								style={{ width: 120, height: 120 }}
+								source={require("../assets/calendar/037-calendar.png")}
+							/>
+							<Text style={{ marginTop: 8, fontWeight: "bold" }}>
+								OOPS...! Không có lịch
+							</Text>
+						</View>
+					)}
+				</View>
+
 				<View>
 					<TodayInfo
 						day={moment().format("DD")}
 						month={moment().format("MM")}
 						weekDay={moment().format("dddd")}
+						onPress={() => this.setState({ formattedDate: moment().format("YYYY-MM-DD") })}
 					/>
 				</View>
 				<StatusBar style="auto" />
@@ -268,6 +278,10 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: "white",
+	},
+	content: {
+		flex: 1,
+		padding: 4,
 	},
 });
 

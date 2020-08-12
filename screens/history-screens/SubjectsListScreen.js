@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import {
 	View,
 	StyleSheet,
-	ScrollView,
 	FlatList,
 	AsyncStorage,
 	ActivityIndicator,
@@ -10,6 +9,7 @@ import {
 	RefreshControl,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
+import { Caption } from "react-native-paper";
 import ListSubject from "../../components/listSubject";
 import HeaderComponent from "../../components/Header";
 
@@ -59,8 +59,10 @@ const SubjectsListScreen = ({ navigation }) => {
 						);
 					}
 					setValueData(arrayInfoSubject);
-					setIsLoad(false);
 					setRefreshing(false);
+					setTimeout(() => {
+						setIsLoad(false);
+					}, 1200);
 				}
 			});
 		} catch (error) {}
@@ -99,7 +101,10 @@ const SubjectsListScreen = ({ navigation }) => {
 			/>
 			<View style={styles.content}>
 				{isLoad ? (
-					<ActivityIndicator />
+					<View style={styles.centerScreen}>
+						<ActivityIndicator color="#f08a5d" />
+						<Caption>Đang tải danh sách</Caption>
+					</View>
 				) : (
 					<FlatList
 						data={valueData}
@@ -119,10 +124,17 @@ const SubjectsListScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
+		backgroundColor: "#fff"
 	},
 	content: {
 		flex: 1,
 		padding: 4,
+	},
+	centerScreen: {
+		flex: 1,
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center",
 	},
 });
 

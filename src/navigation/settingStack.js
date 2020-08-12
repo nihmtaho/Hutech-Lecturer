@@ -12,11 +12,6 @@ import HistoryScreen from '../../screens/history-screens/HistoryScreen';
 const SettingStack = createStackNavigator();
 
 const settingStack = ({ route, navigation }) => {
-	if (route.state && route.state.index > 0) {
-		navigation.setOptions({ tabBarVisible: false });
-	} else {
-		navigation.setOptions({ tabBarVisible: true });
-	}
 	return (
 		<SettingStack.Navigator
 			screenOptions={{
@@ -31,28 +26,10 @@ const settingStack = ({ route, navigation }) => {
 				options={{ title: "Tài khoản", headerShown: false }}
 			/>
 			<SettingStack.Screen
-				name="Profile"
-				component={ProfileScreen}
-				options={{
-					title: "Tài khoản",
-					headerShown: false,
-					...TransitionPresets.FadeFromBottomAndroid,
-				}}
-			/>
-			<SettingStack.Screen
 				name="SubjectList"
 				component={SubjectsListScreen}
 				options={{
 					title: "Môn học",
-					headerShown: false,
-					headerTitleAlign: "center",
-				}}
-			/>
-			<SettingStack.Screen
-				name="BugScreen"
-				component={BugScreen}
-				options={{
-					title: "Báo lỗi",
 					headerShown: false,
 					headerTitleAlign: "center",
 				}}
