@@ -85,7 +85,7 @@ const SettingScreen = ({ navigation }) => {
 						name={fullName}
 						subName={departmentName}
 						subFaculty={email}
-						onPress={() => navigation.navigate("Profile")}
+						onPress={() => navigation.push("Profile")}
 					/>
 				)}
 			</View>
@@ -96,38 +96,41 @@ const SettingScreen = ({ navigation }) => {
 					Lựa chọn
 				</Subheading>
 				<MenuView
-					title="Xem điểm danh của sinh viên"
-					iconLeft="calendar"
+					title="Lịch sử điểm danh"
 					iconRight="arrow-right"
-					color="#0063cd"
+					iconImg={require("../assets/calendar/015-calendar.png")}
 					onPress={() => navigation.navigate("SubjectList")}
 				/>
 				<MenuView
 					title="Đổi thông tin liên lạc"
-					iconLeft="customerservice"
 					iconRight="arrow-right"
-					color="green"
+					iconImg={require("../assets/help/004-ticket.png")}
 				/>
 				<MenuView
 					title="Đổi mật khẩu"
-					iconLeft="Safety"
 					iconRight="arrow-right"
-					color="green"
+					iconImg={require("../assets/password/002-protection.png")}
 				/>
-				<Subheading style={{ marginTop: 8, paddingLeft: 12, fontWeight: "bold" }}>
+				<Subheading
+					style={{ marginTop: 12, paddingLeft: 12, fontWeight: "bold" }}
+				>
 					Ứng dụng
 				</Subheading>
 				<MenuView
 					title="Trợ giúp"
-					iconLeft="questioncircle"
 					iconRight="arrow-right"
-					color="#0063cd"
+					iconImg={require("../assets/help/015-loupe.png")}
 				/>
 				<MenuView
 					title="Báo lỗi"
-					iconLeft="exclamationcircle"
 					iconRight="arrow-right"
-					color="red"
+					iconImg={require("../assets/other-icon/040-error.png")}
+					onPress={() => navigation.navigate("BugScreen")}
+				/>
+				<MenuView
+					title="Giới thiệu"
+					iconRight="arrow-right"
+					iconImg={require("../assets/other-icon/045-medal.png")}
 					onPress={() => navigation.navigate("BugScreen")}
 				/>
 			</ScrollView>

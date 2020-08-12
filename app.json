@@ -4,14 +4,13 @@
     "slug": "HutechLecturer",
     "platforms": [
       "ios",
-      "android",
-      "web"
+      "android"
     ],
-    "version": "1.2.0608",
+    "version": "2.2.0811",
     "orientation": "portrait",
     "icon": "./assets/logo-hutech-have-background.png",
     "splash": {
-      "image": "./assets/splash-face-recogination.png",
+      "image": "./assets/splash/splash-interface.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -24,7 +23,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.thaotruogg.hutechlecturer",
-      "buildNumber": "1.2.0608"
+      "buildNumber": "2.2.0811"
     },
     "android": {
       "package": "com.thaotruogg.hutechlecturer",

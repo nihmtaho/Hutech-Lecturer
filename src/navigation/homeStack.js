@@ -10,11 +10,6 @@ import DetailScreen from "../../screens/DetailScreen";
 const HomeStack = createStackNavigator();
 
 const homeStack = ({ navigation, route }) => {
-	if (route.state && route.state.index > 0) {
-		navigation.setOptions({ tabBarVisible: false });
-	} else {
-		navigation.setOptions({ tabBarVisible: true });
-	}
 	return (
 		<HomeStack.Navigator
 			initialRouteName="Home"

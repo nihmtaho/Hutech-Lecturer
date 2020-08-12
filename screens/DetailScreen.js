@@ -97,25 +97,6 @@ const DetailScreen = ({ navigation, route }) => {
 		});
 	};
 
-	// Push data Student
-	const pushData = () => {
-		// db.ref("Subject/" + subjectCode + "/attendance/" + classCode +"/" + year + "/" + month + "/" + day + "/")
-		db.ref("Subject/" + subjectCode + "/attendance/16DTHJE1/2020/08/01/")
-			.update({
-				"1611060383": {
-					dateCheckIn: dataMoment,
-					timeCheckIn: timeMoment,
-					valueCheckIn: true,
-				},
-			})
-			.then((data) => {
-				console.log("dataCheckIn -> pushed");
-			})
-			.catch((error) => {
-				console.log("error", error);
-			});
-	};
-
 	const _pushLog = (valueCheckIn) => {
 		const data = dataMoment + " " + timeMoment + " --> " + valueCheckIn;
 		db.ref("Subject/" + subjectCode + "/attendance/" + classCode + "/log/")
@@ -290,6 +271,7 @@ const DetailScreen = ({ navigation, route }) => {
 							contentStyle={{ height: 54 }}
 							mode="contained"
 							color="#f08a5d"
+							labelStyle={{color: "#fff"}}
 							onPress={() => _openAttendance()}
 						>
 							Mở điểm danh
@@ -301,7 +283,7 @@ const DetailScreen = ({ navigation, route }) => {
 			</View>
 			<Button
 				style={{ marginHorizontal: 54, marginBottom: 42 }}
-				mode="outlined"
+				mode="text"
 				color="#dd2c00"
 				onPress={() => navigation.goBack()}
 			>
@@ -315,6 +297,7 @@ const DetailScreen = ({ navigation, route }) => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
+		backgroundColor: "#fff"
 	},
 	topScreen: {
 		flex: 0.6,
