@@ -18,7 +18,7 @@ import { StatusBar } from "expo-status-bar";
 import Constants from "expo-constants";
 import * as Location from "expo-location";
 import moment from "moment";
-import { AntDesign } from "@expo/vector-icons";
+import { AntDesign, Entypo } from "@expo/vector-icons";
 
 import { db } from "../src/config/db";
 
@@ -71,7 +71,7 @@ const DetailScreen = ({ navigation, route }) => {
 		// console.log(location);
 	}
 
-	const writeData = (location) => {
+	const pushLocation = (location) => {
 		db.ref("Teachers/phamtuan_mc/")
 			.update({ location })
 			.then((data) => {
@@ -111,6 +111,7 @@ const DetailScreen = ({ navigation, route }) => {
 
 	const _openAttendance = async () => {
 		setIsOpen(true);
+		pushLocation(location);
 		const valueOpen = true;
 		try {
 			AsyncStorage.setItem("stateCheckInStatus", "isOpen");
@@ -189,12 +190,11 @@ const DetailScreen = ({ navigation, route }) => {
 					style={{
 						display: "flex",
 						flexDirection: "row",
-						marginRight: 8,
-						justifyContent: "flex-end",
+						justifyContent: "center",
 					}}
 				>
-					<Caption style={{ marginRight: 4 }}>Pull down to close</Caption>
-					<AntDesign name="arrowdown" size={24} color="#fff" />
+					{/* <Caption style={{ marginRight: 4 }}>Pull down to close</Caption> */}
+					<Entypo name="chevron-down" size={24} color="#fff" />
 				</TouchableOpacity>
 				<Title
 					style={{ color: "#fff", fontWeight: "bold", textAlign: "center" }}
@@ -259,15 +259,18 @@ const DetailScreen = ({ navigation, route }) => {
 				{dataMoment == moment().format("YYYY-MM-DD") ? (
 					isOpen === true ? (
 						<Button
+							style={{marginHorizontal: 20}}
 							contentStyle={{ height: 54 }}
 							mode="contained"
 							color="#f08a5d"
+							labelStyle={{color: "#fff"}}
 							onPress={() => _closeAttendance()}
 						>
 							Đóng điểm danh
 						</Button>
 					) : (
 						<Button
+							style={{marginHorizontal: 20}}
 							contentStyle={{ height: 54 }}
 							mode="contained"
 							color="#f08a5d"
@@ -309,6 +312,7 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 8,
 		display: "flex",
 		justifyContent: "flex-end",
+		// alignItems: "center",
 		marginBottom: 54,
 	},
 	detailBlock: {

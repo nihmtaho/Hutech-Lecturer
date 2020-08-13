@@ -29,11 +29,6 @@ const profileView = (props) => {
 				}}
 			>
 				<View style={styles.avatarView}>
-					{/* <Avatar.Image
-					size={54}
-					style={{ backgroundColor: "#ffffff" }}
-					source={require("../assets/profile-user/student-boy.png")}
-				/> */}
 					<Image
 						style={{ width: 60, height: 60 }}
 						source={require("../assets/profile-user/student-boy.png")}

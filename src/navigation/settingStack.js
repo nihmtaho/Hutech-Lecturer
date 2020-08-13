@@ -4,10 +4,10 @@ import {
 	TransitionPresets,
 } from "@react-navigation/stack";
 import SettingScreen from "../../screens/SettingScreen";
-import ProfileScreen from "../../screens/ProfileScreen";
 import SubjectsListScreen from "../../screens/history-screens/SubjectsListScreen";
-import BugScreen from "../../screens/bug-a-help-screens/BugScreen";
-import HistoryScreen from '../../screens/history-screens/HistoryScreen';
+import HistoryScreen from "../../screens/history-screens/HistoryScreen";
+import ClassScreen from "../../screens/history-screens/ClassScreen";
+import StudentScreen from "../../screens/history-screens/StudentScreen";
 
 const SettingStack = createStackNavigator();
 
@@ -40,6 +40,23 @@ const settingStack = ({ route, navigation }) => {
 				options={{
 					headerShown: false,
 					headerTitleAlign: "center",
+				}}
+			/>
+			<SettingStack.Screen
+				name="ClassScreen"
+				component={ClassScreen}
+				options={{
+					headerShown: false,
+					headerTitleAlign: "center",
+				}}
+			/>
+			<SettingStack.Screen
+				name="StudentScreen"
+				component={StudentScreen}
+				options={{
+					headerShown: false,
+					headerTitleAlign: "center",
+					...TransitionPresets.ModalSlideFromBottomIOS
 				}}
 			/>
 		</SettingStack.Navigator>

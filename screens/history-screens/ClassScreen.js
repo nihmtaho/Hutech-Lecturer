@@ -7,6 +7,7 @@ import {
 	ActivityIndicator,
 	TouchableOpacity,
 	SafeAreaView,
+	RefreshControl,
 } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import { Ionicons } from "@expo/vector-icons";
@@ -16,26 +17,55 @@ import Constants from "expo-constants";
 
 import { db } from "../../src/config/db";
 
-const HistoryScreen = ({ navigation, route }) => {
+const ClassScreen = ({ navigation, route }) => {
 	const { subjectCode } = route.params;
 	const [dataClass, setDataClass] = useState([]);
-	const [isLoad, setIsLoad] = useState(false);
+	const [isLoad, setIsLoad] = useState(true);
+	const [refreshing, setRefreshing] = useState(false);
 
 	useEffect(() => {
 		_fetchClassObj();
 	}, []);
 
-	const _fetchClassObj = () => {
-		db.ref("Subject/" + subjectCode + "/attendance/").on(
-			"value",
-			(Snapshot) => {
-				if (Snapshot.exists()) {
-					
-				} else {
-					console.log("not found");
+	const wait = (timeout) => {
+		return new Promise((resolve) => {
+			setTimeout(resolve, timeout);
+		});
+	};
+
+	const _onRefresh = React.useCallback(() => {
+		setRefreshing(true);
+		wait(1000).then(() => _fetchClassObj());
+	}, []);
+
+	const _fetchClassObj = async () => {
+		try {
+			setIsLoad(true);
+			db.ref("Subject/" + subjectCode + "/attendance/").once(
+				"value",
+				(Snapshot) => {
+					if (Snapshot.exists()) {
+						let array_temp = [];
+						for (const key in Snapshot.val()) {
+							array_temp.push({
+								keyClass: key,
+							});
+						}
+						setDataClass(array_temp);
+						setRefreshing(false);
+						setTimeout(() => {
+							setIsLoad(false);
+						}, 1000);
+					} else {
+						console.log("not found");
+						setRefreshing(false);
+						setTimeout(() => {
+							setIsLoad(false);
+						}, 1000);
+					}
 				}
-			}
-		);
+			);
+		} catch (error) {}
 	};
 
 	const _renderRow = ({ item, index }) => {
@@ -45,6 +75,12 @@ const HistoryScreen = ({ navigation, route }) => {
 					styles.shadowColor,
 					{ flex: 1, display: "flex", flexDirection: "column" },
 				]}
+				onPress={() =>
+					navigation.push("StudentScreen", {
+						classCode: item.keyClass,
+						subjectCode: subjectCode,
+					})
+				}
 			>
 				<View
 					style={{
@@ -56,7 +92,7 @@ const HistoryScreen = ({ navigation, route }) => {
 					}}
 				>
 					<Title style={{ textAlign: "center", color: "#fff" }}>
-						{/* {item.keyClass} */}
+						{item.keyClass}
 					</Title>
 				</View>
 			</TouchableOpacity>
@@ -73,20 +109,30 @@ const HistoryScreen = ({ navigation, route }) => {
 					<Ionicons name="md-arrow-round-back" size={26} color="#fff" />
 				</TouchableOpacity>
 				<Title style={{ color: "#fff", textAlign: "center" }}>
-					XEM ĐIỂM DANH
+					CHỌN LỚP HỌC
 				</Title>
 				<Caption style={{ textAlign: "center", marginTop: -6 }}>
-					{/* Chọn một lớp để xem điểm danh của sinh viên */}
+					Chọn một lớp để xem điểm danh của sinh viên
 				</Caption>
 			</View>
 			<View style={styles.content}>
-				<FlatList
-					style={{ flex: 1 }}
-					data={dataClass}
-					renderItem={_renderRow}
-					numColumns={2}
-					keyExtractor={(item, index) => index.toString()}
-				/>
+				{isLoad == true ? (
+					<Animatable.View animation="bounceIn" style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+						<ActivityIndicator color="#96bb7c" />
+						<Caption>Đang tải danh sách các lớp</Caption>
+					</Animatable.View>
+				) : (
+					<FlatList
+						style={{ flex: 1 }}
+						data={dataClass}
+						renderItem={_renderRow}
+						numColumns={2}
+						keyExtractor={(item, index) => index.toString()}
+						refreshControl={
+							<RefreshControl refreshing={refreshing} onRefresh={_onRefresh} />
+						}
+					/>
+				)}
 			</View>
 			<StatusBar style="auto" />
 		</SafeAreaView>
@@ -122,6 +168,17 @@ const styles = StyleSheet.create({
 		borderRadius: 999,
 		zIndex: 999,
 	},
+	shadowColor: {
+		shadowColor: "#000",
+		shadowOffset: {
+			width: 0,
+			height: 5,
+		},
+		shadowOpacity: 0.34,
+		shadowRadius: 6.27,
+
+		elevation: 10,
+	},
 });
 
-export default HistoryScreen;
+export default ClassScreen;
