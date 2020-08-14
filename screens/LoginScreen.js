@@ -11,13 +11,15 @@ import {
 import { Button, TextInput } from "react-native-paper";
 import { StatusBar } from "expo-status-bar";
 import Constants from "expo-constants";
+import * as Animatable from "react-native-animatable";
 
 //TODO: Import only Screens and Components
 import Contact from "../components/Contact";
 
 //TODO: Attribute
 import { AuthContext } from "../src/context";
-const imgSource = "../assets/logo.png";
+
+const imgSource = require("../assets/logo.png");
 
 function LoginScreen(props) {
 	const { navigation } = props;
@@ -29,9 +31,13 @@ function LoginScreen(props) {
 
 	return (
 		<SafeAreaView style={styles.container}>
-			<ScrollView>
+			<ScrollView contentContainerStyle={{ flexGrow: 1 }}>
 				<View style={styles.contentTopLayout}>
-					<Image style={styles.imgLogo} source={require(imgSource)} />
+					<Animatable.Image
+						animation="fadeInDown"
+						style={styles.imgLogo}
+						source={imgSource}
+					/>
 					{!request ? (
 						<ActivityIndicator
 							style={{ display: "none" }}
@@ -40,13 +46,13 @@ function LoginScreen(props) {
 						/>
 					) : (
 						<ActivityIndicator
-							style={{ position: "absolute", bottom: 0 }}
+							style={{ position: "absolute", bottom: 8 }}
 							size="small"
 							color="#1E88E5"
 						/>
 					)}
 				</View>
-				<View style={styles.contentMidLayout}>
+				<Animatable.View animation="slideInUp" style={styles.contentMidLayout}>
 					<TextInput
 						style={{ marginVertical: 5 }}
 						label="Username"
@@ -94,7 +100,7 @@ function LoginScreen(props) {
 					<View style={{ marginTop: "20%" }}>
 						<Contact />
 					</View>
-				</View>
+				</Animatable.View>
 				<StatusBar style="auto" />
 			</ScrollView>
 		</SafeAreaView>
@@ -104,20 +110,24 @@ function LoginScreen(props) {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: "#fff",
+		backgroundColor: "#f08a5d",
 	},
 	contentTopLayout: {
-		flex: 1,
+		flex: 1 / 3,
 		display: "flex",
 		justifyContent: "center",
 		alignItems: "center",
 		paddingTop: Constants.statusBarHeight,
+		backgroundColor: "#f08a5d"
 	},
 	contentMidLayout: {
-		flex: 1,
+		flex: 2 / 3,
 		paddingTop: 20,
 		paddingRight: 20,
 		paddingLeft: 20,
+		borderTopLeftRadius: 18,
+		borderTopRightRadius: 18,
+		backgroundColor: "#fff"
 	},
 	imgLogo: {
 		width: 154,

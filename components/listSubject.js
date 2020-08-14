@@ -8,10 +8,12 @@ function listSubject(props) {
 		<TouchableOpacity
 			activeOpacity={0.5}
 			onPress={props.onPress}
-			style={styles.container}
+			style={[styles.container, styles.shadowColor]}
 		>
 			<View style={styles.divContent}>
-				<Text style={(styles.titleStyle, styles.fontSize)}>{data.subjectName}</Text>
+				<Text style={(styles.titleStyle, styles.fontSize)}>
+					{data.subjectName}
+				</Text>
 			</View>
 			<View style={styles.mountContent}>
 				<View style={styles.mountLeft}>
@@ -29,7 +31,6 @@ const styles = StyleSheet.create({
 		marginVertical: 6,
 		marginHorizontal: 10,
 		borderRadius: 14,
-		elevation: 2
 	},
 	divContent: {
 		display: "flex",
@@ -63,6 +64,17 @@ const styles = StyleSheet.create({
 		fontSize: 16,
 		fontWeight: "bold",
 		color: "#fff",
+	},
+	shadowColor: {
+		shadowColor: "#000",
+		shadowOffset: {
+			width: 0,
+			height: 1,
+		},
+		shadowOpacity: 0.2,
+		shadowRadius: 1.41,
+
+		elevation: 2,
 	},
 });
 

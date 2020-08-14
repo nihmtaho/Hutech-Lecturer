@@ -8,6 +8,7 @@ import {
 	SafeAreaView,
 	RefreshControl,
 } from "react-native";
+import * as Animatable from "react-native-animatable";
 import { StatusBar } from "expo-status-bar";
 import { Caption } from "react-native-paper";
 import ListSubject from "../../components/listSubject";
@@ -84,7 +85,7 @@ const SubjectsListScreen = ({ navigation }) => {
 			<ListSubject
 				dataProps={item}
 				onPress={() =>
-					navigation.navigate("HistoryScreen", {
+					navigation.navigate("ClassScreen", {
 						subjectCode: item.subjectCode,
 					})
 				}
@@ -101,19 +102,28 @@ const SubjectsListScreen = ({ navigation }) => {
 			/>
 			<View style={styles.content}>
 				{isLoad ? (
-					<View style={styles.centerScreen}>
+					<Animatable.View animation="bounceIn" style={styles.centerScreen}>
 						<ActivityIndicator color="#f08a5d" />
 						<Caption>Đang tải danh sách</Caption>
-					</View>
+					</Animatable.View>
 				) : (
-					<FlatList
-						data={valueData}
-						renderItem={_renderRow}
-						keyExtractor={(i, k) => k.toString()}
-						refreshControl={
-							<RefreshControl refreshing={refreshing} onRefresh={_onRefresh} />
-						}
-					/>
+					<Animatable.View
+						animation="slideInDown"
+						style={{height: "100%"}}
+					>
+						<FlatList
+							style={{flex: 1}}
+							data={valueData}
+							renderItem={_renderRow}
+							keyExtractor={(i, k) => k.toString()}
+							refreshControl={
+								<RefreshControl
+									refreshing={refreshing}
+									onRefresh={_onRefresh}
+								/>
+							}
+						/>
+					</Animatable.View>
 				)}
 			</View>
 			<StatusBar style="auto" />
@@ -124,7 +134,7 @@ const SubjectsListScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: "#fff"
+		backgroundColor: "#fff",
 	},
 	content: {
 		flex: 1,

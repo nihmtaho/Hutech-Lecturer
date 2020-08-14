@@ -6,14 +6,16 @@ import {
 	AsyncStorage,
 	ScrollView,
 	ActivityIndicator,
+	TouchableOpacity,
+	Image,
 } from "react-native";
-import { Button, Divider, Subheading } from "react-native-paper";
-import { db } from "../src/config/db";
+import { Title, Paragraph, Subheading } from "react-native-paper";
+import * as Animatable from "react-native-animatable";
+import { Entypo } from "@expo/vector-icons";
 
+import { db } from "../src/config/db";
 //Import Components
-import ProfileView from "../components/profileView";
 import MenuView from "../components/menuView";
-import LearnView from "../components/learnView";
 import { StatusBar } from "expo-status-bar";
 import Constants from "expo-constants";
 
@@ -68,29 +70,60 @@ const SettingScreen = ({ navigation }) => {
 
 	return (
 		<View style={styles.container}>
-			<View style={styles.profileView}>
-				{isLoading ? (
-					<ActivityIndicator
-						style={{
-							backgroundColor: "#f08a5d",
-							height: 120,
-							marginBottom: 14,
-							borderBottomEndRadius: 34,
-							borderBottomStartRadius: 34,
-						}}
-						color="#f6ab6c"
-					/>
-				) : (
-					<ProfileView
-						name={fullName}
-						subName={departmentName}
-						subFaculty={email}
-						onPress={() => navigation.push("Profile")}
-					/>
-				)}
-			</View>
-			{/* <LearnView title="8" /> */}
-			{/* <Divider /> */}
+			<TouchableOpacity onPress={() => navigation.push("Profile")}>
+				<View
+					style={{
+						backgroundColor: "#f08a5d",
+						display: "flex",
+						flexDirection: "row",
+						paddingVertical: 12,
+						alignItems: "center",
+						paddingTop: Constants.statusBarHeight,
+						borderBottomEndRadius: 34,
+						borderBottomStartRadius: 34,
+						marginBottom: 14,
+						height: 120,
+						justifyContent: "center",
+					}}
+				>
+					{isLoading ? (
+						<ActivityIndicator color="#f6ab6c" />
+					) : (
+						<>
+							<Animatable.View animation="fadeIn" style={styles.avatarView}>
+								<Image
+									style={{ width: 60, height: 60 }}
+									source={require("../assets/profile-user/student-boy.png")}
+								/>
+							</Animatable.View>
+
+							<Animatable.View animation="fadeIn" style={styles.detailView}>
+								<Title style={{ fontSize: 16, color: "#fff" }}>
+									{fullName}
+								</Title>
+								<Paragraph
+									style={{ fontSize: 12, marginTop: -4, color: "#fff" }}
+								>
+									{email}
+								</Paragraph>
+								<Paragraph
+									style={{ fontSize: 12, marginTop: -4, color: "#fff" }}
+								>
+									{departmentName}
+								</Paragraph>
+							</Animatable.View>
+							<Animatable.View animation="fadeIn" style={styles.iconView}>
+								<Entypo name="dot-single" size={34} color="#a2de96" />
+								<Paragraph
+									style={{ fontSize: 9, marginTop: -16, color: "#fff" }}
+								>
+									active
+								</Paragraph>
+							</Animatable.View>
+						</>
+					)}
+				</View>
+			</TouchableOpacity>
 			<ScrollView>
 				<Subheading style={{ paddingLeft: 12, fontWeight: "bold" }}>
 					Lựa chọn
@@ -149,6 +182,21 @@ const styles = StyleSheet.create({
 		bottom: 24,
 		left: 0,
 		right: 0,
+	},
+	avatarView: {
+		flex: 0.6,
+		alignItems: "center",
+		marginLeft: 12,
+	},
+	detailView: {
+		paddingHorizontal: 12,
+		paddingVertical: 4,
+		flex: 2,
+	},
+	iconView: {
+		flex: 0.5,
+		display: "flex",
+		alignItems: "center",
 	},
 });
 
