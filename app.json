@@ -6,7 +6,7 @@
       "ios",
       "android"
     ],
-    "version": "2.2.0811",
+    "version": "2.2.0820",
     "orientation": "portrait",
     "icon": "./assets/logo-hutech-have-background.png",
     "splash": {
@@ -23,7 +23,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.thaotruogg.hutechlecturer",
-      "buildNumber": "2.2.0811"
+      "buildNumber": "2.2.0820"
     },
     "android": {
       "package": "com.thaotruogg.hutechlecturer",
